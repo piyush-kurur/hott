@@ -57,3 +57,37 @@ assoc :  ∀ {ℓ} {A : Type ℓ}  {u v w x : A}
       → (r : w ≡ x)
       → (p ∘ q) ∘ r ≡ p ∘ (q ∘ r)
 assoc refl refl refl = refl
+
+
+-- Equational reasoning
+-- To prove x_0 = x_n by a sequence of proofs
+-- x_0 = x_1
+-- x_1 = x_2
+-- ... you can use the following syntax
+--
+-- begin x_0 ≅ x_1 by p1
+--           ≅ x_2 by p2
+--       ....
+--           ≅ x_n by pn
+-- ∎
+--
+begin_ : ∀ {ℓ} {A : Type ℓ}
+       → (x : A)
+       → x ≡ x
+begin_ x = refl
+
+_≅_by_ : ∀ {ℓ} {A : Type ℓ} {x y}
+       → x ≡ y
+       → (z : A)
+       → y ≡ z
+       → x ≡ z
+p ≅ z by q = p ∘ q
+
+_∎ : ∀ {ℓ} {A : Type ℓ} {x y : A}
+   → (x ≡ y)
+   → (x ≡ y)
+proof ∎ = proof
+
+infixl 2 begin_
+infixl 1 _≅_by_
+infixl 0 _∎
