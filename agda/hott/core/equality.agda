@@ -1,0 +1,59 @@
+{-# OPTIONS --without-K #-}
+module hott.core.equality where
+
+open import Level
+open import hott.core.universe
+
+-- | The equality type. In hott we think of the equality type as paths
+-- between two points in the space A.
+data _≡_ {ℓ} {A : Type ℓ} : (x y : A) → Type (suc ℓ) where
+  refl : ∀ {x} → x ≡ x
+
+-- In hott view point, this function takes the inverse of the path
+-- from x to y. As a relation you are proving that ≡ is symmetric.
+inv : ∀ {ℓ} {A : Type ℓ} {x y : A}
+    → x ≡ y → y ≡ x
+inv refl = refl
+
+
+-- The path composition. This means transitivity of the ≡ relation.
+_∘_ : ∀ {ℓ} {A : Type ℓ}  {x y z : A}
+    → x ≡ y → y ≡ z → x ≡ z
+refl ∘ refl = refl
+
+
+infixr 0 _≡_
+infixr 1 _∘_
+
+-- Proving that the refl path is the identity under path concatnation.
+refl-is-left-identity : ∀ {ℓ} {A : Type ℓ}  {x y : A}
+                      → ∀ (p : x ≡ y)
+                      → p ∘ refl ≡ p
+refl-is-left-identity refl = refl
+
+refl-is-right-identity : ∀ {ℓ} {A : Type ℓ}  {x y : A}
+                       → ∀ (p : x ≡ y)
+                       → refl ∘ p ≡ p
+
+refl-is-right-identity refl = refl
+
+
+-- Inverse is actually right inverse.
+p∘p₁≡refl : ∀ {ℓ} {A : Type ℓ}  {x y : A}
+          → ∀ (p : x ≡ y)
+          → p ∘ inv p ≡ refl
+p∘p₁≡refl refl = refl
+
+-- Inverse is actually left inverse.
+p₁∘p≡refl : ∀ {ℓ} {A : Type ℓ}  {x y : A}
+          → ∀ (p : x ≡ y)
+          → inv p ∘ p ≡ refl
+p₁∘p≡refl refl = refl
+
+-- The associativity of path composition.
+assoc :  ∀ {ℓ} {A : Type ℓ}  {u v w x : A}
+      → (p : u ≡ v)
+      → (q : v ≡ w)
+      → (r : w ≡ x)
+      → (p ∘ q) ∘ r ≡ p ∘ (q ∘ r)
+assoc refl refl refl = refl
