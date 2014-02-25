@@ -85,12 +85,12 @@ begin_ : ∀ {ℓ} {A : Type ℓ}
        → x ≡ x
 begin_ x = refl
 
-_≅_by_ : ∀ {ℓ} {A : Type ℓ} {x y}
+_≡_by_ : ∀ {ℓ} {A : Type ℓ} {x y}
        → x ≡ y
        → (z : A)
        → y ≡ z
        → x ≡ z
-p ≅ z by q = p ∘ q
+p ≡ z by q = p ∘ q
 
 _∎ : ∀ {ℓ} {A : Type ℓ} {x y : A}
    → (x ≡ y)
@@ -98,5 +98,5 @@ _∎ : ∀ {ℓ} {A : Type ℓ} {x y : A}
 proof ∎ = proof
 
 infixl 2 begin_
-infixl 1 _≅_by_
+infixl 1 _≡_by_
 infixl 0 _∎
