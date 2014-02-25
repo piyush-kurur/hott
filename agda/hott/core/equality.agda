@@ -11,9 +11,9 @@ data _≡_ {ℓ} {A : Type ℓ} : (x y : A) → Type (suc ℓ) where
 
 -- In hott view point, this function takes the inverse of the path
 -- from x to y. As a relation you are proving that ≡ is symmetric.
-inv : ∀ {ℓ} {A : Type ℓ} {x y : A}
+_⁻¹ : ∀{ℓ} {A : Type ℓ} {x y : A}
     → x ≡ y → y ≡ x
-inv refl = refl
+refl ⁻¹ = refl
 
 
 -- The path composition. This means transitivity of the ≡ relation.
@@ -24,6 +24,7 @@ refl ∘ refl = refl
 
 infixr 0 _≡_
 infixr 1 _∘_
+infixl 2 _⁻¹
 
 -- Proving that the refl path is the identity under path concatnation.
 refl-is-left-identity : ∀ {ℓ} {A : Type ℓ}  {x y : A}
@@ -39,16 +40,16 @@ refl-is-right-identity refl = refl
 
 
 -- Inverse is actually right inverse.
-p∘p₁≡refl : ∀ {ℓ} {A : Type ℓ}  {x y : A}
+p∘p⁻¹≡refl : ∀ {ℓ} {A : Type ℓ}  {x y : A}
           → ∀ (p : x ≡ y)
-          → p ∘ inv p ≡ refl
-p∘p₁≡refl refl = refl
+          → p ∘ p ⁻¹ ≡ refl
+p∘p⁻¹≡refl refl = refl
 
 -- Inverse is actually left inverse.
-p₁∘p≡refl : ∀ {ℓ} {A : Type ℓ}  {x y : A}
+p⁻¹∘p≡refl : ∀ {ℓ} {A : Type ℓ}  {x y : A}
           → ∀ (p : x ≡ y)
-          → inv p ∘ p ≡ refl
-p₁∘p≡refl refl = refl
+          → p ⁻¹ ∘ p ≡ refl
+p⁻¹∘p≡refl refl = refl
 
 
 -- The associativity of path composition.
