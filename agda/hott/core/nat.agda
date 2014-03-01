@@ -40,11 +40,11 @@ x+y≡y+x zero    n        = x≡x+0 (n)
 x+y≡y+x n       zero     = x+0≡x (n)
 x+y≡y+x (succ m) (succ n)
   = begin succ m + succ n
-          ≡ succ (m + succ n)   by refl
+          ≡ succ (m + succ n)   by definition
           ≡ succ (succ n + m)   by ap succ (x+y≡y+x m (succ n))
-          ≡ succ (succ (n + m)) by refl
+          ≡ succ (succ (n + m)) by definition
           ≡ succ (succ (m + n)) by ap succ (ap succ (x+y≡y+x n m))
-          ≡ succ (succ m + n)   by ap succ refl
+          ≡ succ (succ m + n)   by ap succ definition
           ≡ succ (n + succ m)   by ap succ (x+y≡y+x (succ m) n)
-          ≡ succ n + succ m     by refl
+          ≡ succ n + succ m     by definition
   ∎
