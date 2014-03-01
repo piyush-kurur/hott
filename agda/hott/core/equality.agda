@@ -26,17 +26,31 @@ infixr 0 _≡_
 infixr 1 _∘_
 infixl 2 _⁻¹
 
--- Proving that the refl path is the identity under path concatnation.
-refl-is-left-identity : ∀ {ℓ} {A : Type ℓ}  {x y : A}
+-- The path refl is the left identity under path concatnation.
+refl∘p≡p : ∀ {ℓ} {A : Type ℓ}  {x y : A}
                       → ∀ (p : x ≡ y)
-                      → p ∘ refl ≡ p
-refl-is-left-identity refl = refl
+                      → refl ∘ p ≡ p
+refl∘p≡p refl = refl
 
-refl-is-right-identity : ∀ {ℓ} {A : Type ℓ}  {x y : A}
-                       → ∀ (p : x ≡ y)
-                       → refl ∘ p ≡ p
+-- Alternate form of refl being left identity.
+p≡refl∘p : ∀ {ℓ} {A : Type ℓ}  {x y : A}
+         → ∀ (p : x ≡ y)
+         → p ≡ refl ∘ p
+p≡refl∘p p = refl∘p≡p p ⁻¹
 
-refl-is-right-identity refl = refl
+-- The path refl is the right identity under path concatnation.
+p∘refl≡p : ∀ {ℓ} {A : Type ℓ}  {x y : A}
+         → ∀ (p : x ≡ y)
+         → p ∘ refl ≡ p
+
+p∘refl≡p refl = refl
+
+-- Alternate form of refl being the right identity.
+p≡p∘refl : ∀ {ℓ} {A : Type ℓ}  {x y : A}
+         → ∀ (p : x ≡ y)
+         → p ≡ p ∘ refl
+
+p≡p∘refl p = p∘refl≡p p ⁻¹
 
 
 -- Inverse is actually right inverse.
