@@ -123,6 +123,11 @@ _∎ : ∀ {ℓ} {A : Type ℓ} {x y : A}
    → (x ≡ y)
 proof ∎ = proof
 
+-- In equational proofs, it is more readable to use by definition
+-- than by refl
+definition : ∀{ℓ} {A : Type ℓ} {x : A} → x ≡ x
+definition = refl
+
 infixl 2 begin_
 infixl 1 _≡_by_
 infixl 0 _∎
