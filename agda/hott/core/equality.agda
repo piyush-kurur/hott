@@ -52,6 +52,18 @@ p≡p∘refl : ∀ {ℓ} {A : Type ℓ}  {x y : A}
 
 p≡p∘refl p = p∘refl≡p p ⁻¹
 
+-- The inverse of inverse is identity
+p⁻¹⁻¹≡p  : ∀ {ℓ} {A : Type ℓ}  {x y : A}
+         → ∀ (p : x ≡ y)
+         → (p ⁻¹)⁻¹ ≡ p
+p⁻¹⁻¹≡p refl = refl
+
+-- Alternate form of the theorem inverse of inverse is identity.
+p≡p⁻¹⁻¹  : ∀ {ℓ} {A : Type ℓ}  {x y : A}
+         → ∀ (p : x ≡ y)
+         → p ≡ (p ⁻¹)⁻¹
+p≡p⁻¹⁻¹ p = p⁻¹⁻¹≡p p ⁻¹
+
 
 -- Inverse is actually right inverse.
 p∘p⁻¹≡refl : ∀ {ℓ} {A : Type ℓ}  {x y : A}
