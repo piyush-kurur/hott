@@ -6,7 +6,7 @@ open import hott.core.universe
 
 -- | The equality type. In hott we think of the equality type as paths
 -- between two points in the space A.
-data _≡_ {ℓ} {A : Type ℓ} : (x y : A) → Type (suc ℓ) where
+data _≡_ {ℓ} {A : Type ℓ} : (x y : A) → Type ℓ where
   refl : ∀ {x} → x ≡ x
 
 -- In hott view point, this function takes the inverse of the path
