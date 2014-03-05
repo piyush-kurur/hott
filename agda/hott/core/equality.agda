@@ -9,6 +9,9 @@ open import hott.core.universe
 data _≡_ {ℓ} {A : Type ℓ} (x : A) : (y : A) → Type ℓ where
   refl : x ≡ x
 
+{-# BUILTIN EQUALITY _≡_ #-}
+{-# BUILTIN REFL refl    #-}
+
 -- Induction principle for ≡ type.
 induction≡ : {ℓ₀ ℓ₁ : Level} {A : Type ℓ₀}
          → (D : {x y : A} (p : x ≡ y) → Type ℓ₁)
