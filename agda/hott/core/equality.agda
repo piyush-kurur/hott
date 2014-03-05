@@ -9,6 +9,14 @@ open import hott.core.universe
 data _≡_ {ℓ} {A : Type ℓ} : (x y : A) → Type ℓ where
   refl : ∀ {x} → x ≡ x
 
+-- Induction principle for ≡ type.
+induction≡ : {ℓ₀ ℓ₁ : Level} {A : Type ℓ₀}
+         → (D : {x y : A} (p : x ≡ y) → Type ℓ₁)
+         → (d : {x : A} → D {x} {x} refl)
+         → {x y : A} → (p : x ≡ y) → D p
+
+induction≡ D d refl = d
+
 -- In hott view point, this function takes the inverse of the path
 -- from x to y. As a relation you are proving that ≡ is symmetric.
 _⁻¹ : ∀{ℓ} {A : Type ℓ} {x y : A}
