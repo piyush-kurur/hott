@@ -6,8 +6,8 @@ open import hott.core.universe
 
 -- | The equality type. In hott we think of the equality type as paths
 -- between two points in the space A.
-data _≡_ {ℓ} {A : Type ℓ} : (x y : A) → Type ℓ where
-  refl : ∀ {x} → x ≡ x
+data _≡_ {ℓ} {A : Type ℓ} (x : A) : (y : A) → Type ℓ where
+  refl : x ≡ x
 
 -- Induction principle for ≡ type.
 induction≡ : {ℓ₀ ℓ₁ : Level} {A : Type ℓ₀}
