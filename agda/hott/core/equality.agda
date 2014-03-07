@@ -60,9 +60,14 @@ ap : ∀ {ℓ₀ ℓ₁} {A : Type ℓ₀}  {B : Type ℓ₁} {x y : A}
 ap f refl = refl
 
 
-infixr 0 _≡_
-infixr 1 _∙_
-infixl 2 _⁻¹
+infixr 1 _≡_
+
+-- Precedence of multiplication
+
+infixl 70 _∙_
+
+-- Precedence of exponentiation.
+infixl 90 _⁻¹
 
 -- Equational reasoning
 -- To prove x_0 = x_n by a sequence of proofs
