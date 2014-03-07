@@ -3,8 +3,7 @@
 -- Some basic theorms about natural numbers.
 module hott.core.nat.theorems where
 
-open import hott.core.equality
-open import hott.core.nat
+open import hott.core
 
 -- 0 is the right identity of addition.
 x+0≡x : ∀(x : ℕ) → x + 0 ≡ x
@@ -45,7 +44,7 @@ x+y≡y+x (succ m) (succ n)
           ≡ succ (m + succ n)   by definition
           ≡ succ (succ n + m)   by ap succ (x+y≡y+x m (succ n))
           ≡ succ (succ (n + m)) by definition
-          ≡ succ (succ (m + n)) by ap succ (ap succ (x+y≡y+x n m))
+          ≡ succ (succ (m + n)) by ap (succ ∘ succ) (x+y≡y+x n m)
           ≡ succ (succ m + n)   by ap succ definition
           ≡ succ (n + succ m)   by ap succ (x+y≡y+x (succ m) n)
           ≡ succ n + succ m     by definition
