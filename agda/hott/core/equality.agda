@@ -20,6 +20,26 @@ induction≡ : {ℓ₀ ℓ₁ : Level} {A : Type ℓ₀}
 
 induction≡ D d refl = d
 
+-- Path transportation. Although the type family P does not depend on
+-- the values x and y, we have moved it closer to x ≡ y argument so
+-- that we can easily pass the implicit argument P as transport {P} p.
+-- We do no have to bothering too much about the other implicit
+-- arguments.
+transport : ∀ {ℓ₀ ℓ₁}{A : Type ℓ₀}{x y : A}
+          → {P : A → Type ℓ₁}
+          → x ≡ y
+          → P x → P y
+transport refl = λ z → z
+
+-- Another symbol for transport. Use it when you do not want to
+-- specify P.
+_⋆ : ∀ {ℓ₀ ℓ₁}{A : Type ℓ₀}{P : A → Type ℓ₁}
+   → {x y : A}
+   → x ≡ y
+   → P x → P y
+p ⋆ = transport p
+
+
 -- In hott view point, this function takes the inverse of the path
 -- from x to y. As a relation you are proving that ≡ is symmetric.
 _⁻¹ : ∀{ℓ} {A : Type ℓ} {x y : A}
