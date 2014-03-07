@@ -27,9 +27,9 @@ _⁻¹ : ∀{ℓ} {A : Type ℓ} {x y : A}
 refl ⁻¹ = refl
 
 -- The path composition. This means transitivity of the ≡ relation.
-_∘_ : ∀ {ℓ} {A : Type ℓ}  {x y z : A}
+_∙_ : ∀ {ℓ} {A : Type ℓ}  {x y z : A}
     → x ≡ y → y ≡ z → x ≡ z
-refl ∘ refl = refl
+refl ∙ refl = refl
 
 -- The functional congruence, i.e. likes gives likes on application of
 -- a function. In the HoTT perspective this says that functions are
@@ -41,7 +41,7 @@ ap f refl = refl
 
 
 infixr 0 _≡_
-infixr 1 _∘_
+infixr 1 _∙_
 infixl 2 _⁻¹
 
 -- Equational reasoning
@@ -66,7 +66,7 @@ _≡_by_ : ∀ {ℓ} {A : Type ℓ} {x y}
        → (z : A)
        → y ≡ z
        → x ≡ z
-p ≡ z by q = p ∘ q
+p ≡ z by q = p ∙ q
 
 _∎ : ∀ {ℓ} {A : Type ℓ} {x y : A}
    → (x ≡ y)
