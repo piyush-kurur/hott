@@ -1,3 +1,5 @@
+{-# OPTIONS --without-K #-}
+
 -- Exposes the core of hott
 module hott.core where
 
