@@ -16,3 +16,7 @@ infixr 100 _∘_
 -- The constant function.
 constant : ∀ {ℓ₀ ℓ₁}{A : Type ℓ₀}{B : Type ℓ₁} → A → B → A
 constant a b = a
+
+-- Alternate syntax for dependent function type.
+∏ : ∀{ℓ₀ ℓ₁}(A : Type ℓ₀)(B : A → Type ℓ₁) → Type (ℓ₀ ⊔ ℓ₁)
+∏ A B = (a : A) → B(a)
