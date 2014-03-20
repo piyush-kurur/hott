@@ -33,3 +33,7 @@ trans {ℓ} {A} xEy = induction≡ D d xEy
 
     d : {u : A} → D {u} refl
     d uEw = uEw
+
+symIsInv : ∀{ℓ} {A : Type ℓ} {x y : A}
+         → (p : x ≡ y) → sym p ≡ p ⁻¹
+symIsInv refl = refl
