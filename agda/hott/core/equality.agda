@@ -23,7 +23,7 @@ induction≡ D d refl = d
 -- Path transportation. Although the type family P does not depend on
 -- the values x and y, we have moved it closer to x ≡ y argument so
 -- that we can easily pass the implicit argument P as transport {P} p.
--- We do no have to bothering too much about the other implicit
+-- We do no have to bother too much about the other implicit
 -- arguments.
 transport : ∀ {ℓ₀ ℓ₁}{A : Type ℓ₀}{x y : A}
           → {P : A → Type ℓ₁}
@@ -54,7 +54,7 @@ refl ∙ refl = refl
 -- The functional congruence, i.e. likes gives likes on application of
 -- a function. In the HoTT perspective this says that functions are
 -- functors.
-ap : ∀ {ℓ₀ ℓ₁} {A : Type ℓ₀}  {B : Type ℓ₁} {x y : A}
+ap : ∀ {ℓ₀ ℓ₁} {A : Type ℓ₀} {B : Type ℓ₁} {x y : A}
      → ∀ (f : A → B)
      → x ≡ y → f x ≡ f y
 ap f refl = refl
