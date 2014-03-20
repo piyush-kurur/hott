@@ -59,6 +59,16 @@ ap : ∀ {ℓ₀ ℓ₁} {A : Type ℓ₀}  {B : Type ℓ₁} {x y : A}
      → x ≡ y → f x ≡ f y
 ap f refl = refl
 
+-- The dependent version of ap. This requires transport for its
+-- definition.
+
+apd : ∀{ℓ₀ ℓ₁}{A : Type ℓ₀}{B : A → Type ℓ₁}
+    → (f : (a : A) → B a)
+    → {x y : A}
+    → (p : x ≡ y)
+    → (p ⋆) (f x) ≡ f y
+apd f refl = refl
+
 
 infixr 1 _≡_
 
