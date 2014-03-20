@@ -116,3 +116,11 @@ definition = refl
 infixl 2 begin_
 infixl 1 _≡_by_
 infixl 0 _∎
+
+applying_on_ : ∀{ℓ₀ ℓ₁}{A : Type ℓ₀}{B : Type ℓ₁}
+             → (f : A → B)
+             → {x y : A}
+             → (p : x ≡ y)
+             → f x ≡ f y
+applying_on_ f a = ap f a
+infixr 2 applying_on_
