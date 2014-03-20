@@ -42,10 +42,10 @@ x+y≡y+x n 0
 x+y≡y+x (succ m) (succ n)
   = begin succ m + succ n
           ≡ succ (m + succ n)   by definition
-          ≡ succ (succ n + m)   by ap succ (x+y≡y+x m (succ n))
+          ≡ succ (succ n + m)   by applying succ on x+y≡y+x m (succ n)
           ≡ succ (succ (n + m)) by definition
-          ≡ succ (succ (m + n)) by ap (succ ∘ succ) (x+y≡y+x n m)
-          ≡ succ (succ m + n)   by ap succ definition
-          ≡ succ (n + succ m)   by ap succ (x+y≡y+x (succ m) n)
+          ≡ succ (succ (m + n)) by applying succ ∘ succ on (x+y≡y+x n m)
+          ≡ succ (succ m + n)   by applying succ on definition
+          ≡ succ (n + succ m)   by applying succ on x+y≡y+x (succ m) n
           ≡ succ n + succ m     by definition
   ∎
