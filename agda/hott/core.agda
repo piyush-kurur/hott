@@ -5,8 +5,6 @@ module hott.core where
 
 -- Other useful modules from the stdlib
 
-open import Level public using (_⊔_; Level)
-
 -- The basic types of hott
 
 open import hott.core.equality  public -- Equality type

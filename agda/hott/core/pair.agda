@@ -3,7 +3,6 @@
 -- This module implements the dependent pair type Σ.
 module hott.core.pair where
 
-open import Level
 open import hott.core.universe
 
 data Σ {ℓ₀ ℓ₁}

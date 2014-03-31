@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K #-}
 module hott.core.equality where
 
-open import Level
 open import hott.core.universe
 
 -- | The equality type. In hott we think of the equality type as paths
@@ -9,8 +8,8 @@ open import hott.core.universe
 data _≡_ {ℓ} {A : Type ℓ} (x : A) : (y : A) → Type ℓ where
   refl : x ≡ x
 
-{-# BUILTIN EQUALITY _≡_ #-}
-{-# BUILTIN REFL refl    #-}
+{-# BUILTIN EQUALITY _≡_     #-}
+{-# BUILTIN REFL     refl    #-}
 
 -- Induction principle for ≡ type.
 induction≡ : {ℓ₀ ℓ₁ : Level} {A : Type ℓ₀}

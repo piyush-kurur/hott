@@ -2,7 +2,6 @@
 
 module hott.core.functions where
 
-open import Level
 open import hott.core.universe
 
 -- Composition of functions.
