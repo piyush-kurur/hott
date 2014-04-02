@@ -13,6 +13,12 @@ data ℕ : Type₀ where
 {-# BUILTIN ZERO zero #-}
 {-# BUILTIN SUC  succ #-}
 
+-- Addition.
 _+_   : ℕ → ℕ → ℕ
 0       + y = y
 succ x  + y = succ (x + y)
+
+-- Multiplication
+_*_   : ℕ → ℕ → ℕ
+zero   * y = zero
+succ x * y = y + (x * y)
