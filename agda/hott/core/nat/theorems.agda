@@ -49,3 +49,17 @@ x+y≡y+x (succ m) (succ n)
           ≡ succ (n + succ m)   by applying succ on x+y≡y+x (succ m) n
           ≡ succ n + succ m     by definition
   ∎
+-- Associativity of +
+x+[y+z]≡[x+y]+z : ∀ (x y z : ℕ) → x + (y + z) ≡ (x + y) + z
+x+[y+z]≡[x+y]+z zero      y z
+                = begin 0 + (y + z)
+                        ≡ y + z        by definition
+                        ≡ (0 + y) + z  by definition
+                ∎
+x+[y+z]≡[x+y]+z (succ x)  y z
+  = begin succ x + (y + z)
+          ≡ succ (x + (y  + z)) by definition
+          ≡ succ ((x + y) + z) by applying succ on x+[y+z]≡[x+y]+z x y z
+          ≡ succ (x + y)  + z  by definition
+          ≡ (succ x + y)  + z  by definition
+  ∎
