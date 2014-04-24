@@ -11,4 +11,5 @@ open import hott.core.equality  public -- Equality type
 open import hott.core.functions public -- Basic function operation
 open import hott.core.nat       public -- Natural numbers
 open import hott.core.pair      public -- Dependent pairs
+open import hott.core.coproduct public -- Co-product
 open import hott.core.universe  public -- The type universe
