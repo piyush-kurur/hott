@@ -9,6 +9,10 @@ _∘_ : ∀ {ℓ₀ ℓ₁ ℓ₂ : Level} → {A : Type ℓ₀} {B : Type ℓ�
     → (B → C) → (A → B) → A → C
 f ∘ g = λ x → f (g x)
 
+-- The identity function.
+id : ∀{ℓ} {A : Type ℓ} → A → A
+id x = x
+
 -- We want compostion to have very high precedence.
 infixr 100 _∘_
 
