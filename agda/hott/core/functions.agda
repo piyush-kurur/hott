@@ -3,6 +3,7 @@
 module hott.core.functions where
 
 open import hott.core.universe
+open import hott.core.nat
 
 -- Composition of functions.
 _∘_ : ∀ {ℓ₀ ℓ₁ ℓ₂ : Level} → {A : Type ℓ₀} {B : Type ℓ₁} {C : Type ℓ₂}
@@ -12,6 +13,12 @@ f ∘ g = λ x → f (g x)
 -- The identity function.
 id : ∀{ℓ} {A : Type ℓ} → A → A
 id x = x
+
+-- The interated fucntion
+iterate : ∀{ℓ} {A : Type ℓ} → (A → A) → ℕ → A → A
+iterate _ zero     = id
+iterate f (succ n) = f ∘ iterate f n
+
 
 -- We want compostion to have very high precedence.
 infixr 100 _∘_
