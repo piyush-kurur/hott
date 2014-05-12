@@ -23,24 +23,24 @@ postulate
 Type : (ℓ : Level) → Set (lsuc ℓ)
 Type ℓ = Set ℓ
 
-private
-  one   = lsuc lzero
-  two   = lsuc one
-  three = lsuc two
-  four  = lsuc three
-  five  = lsuc four
-  six   = lsuc five
-  seven = lsuc six
-  eight = lsuc seven
-  nine  = lsuc eight
+
+lone   : Level; lone   = lsuc lzero
+ltwo   : Level; ltwo   = lsuc lone
+lthree : Level; lthree = lsuc ltwo
+lfour  : Level; lfour  = lsuc lthree
+lfive  : Level; lfive  = lsuc lfour
+lsix   : Level; lsix   = lsuc lfive
+lseven : Level; lseven = lsuc lsix
+leight : Level; leight = lsuc lseven
+lnine  : Level; lnine  = lsuc leight
 
 Type₀ = Type lzero
-Type₁ = Type one
-Type₂ = Type two
-Type₃ = Type three
-Type₄ = Type four
-Type₅ = Type five
-Type₆ = Type six
-Type₇ = Type seven
-Type₈ = Type eight
-Type₉ = Type nine
+Type₁ = Type lone
+Type₂ = Type ltwo
+Type₃ = Type lthree
+Type₄ = Type lfour
+Type₅ = Type lfive
+Type₆ = Type lsix
+Type₇ = Type lseven
+Type₈ = Type leight
+Type₉ = Type lnine
