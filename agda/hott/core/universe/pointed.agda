@@ -20,24 +20,13 @@ Type● ℓ = Σ (Type ℓ) id
 -- The level 0 of pointed types.
 Type∙  = Type● lzero
 
-private
-  one   = lsuc lzero
-  two   = lsuc one
-  three = lsuc two
-  four  = lsuc three
-  five  = lsuc four
-  six   = lsuc five
-  seven = lsuc six
-  eight = lsuc seven
-  nine  = lsuc eight
-
 Type∙₀ = Type● lzero
-Type∙₁ = Type● one
-Type∙₂ = Type● two
-Type∙₃ = Type● three
-Type∙₄ = Type● four
-Type∙₅ = Type● five
-Type∙₆ = Type● six
-Type∙₇ = Type● seven
-Type∙₈ = Type● eight
-Type∙₉ = Type● nine
+Type∙₁ = Type● lone
+Type∙₂ = Type● ltwo
+Type∙₃ = Type● lthree
+Type∙₄ = Type● lfour
+Type∙₅ = Type● lfive
+Type∙₆ = Type● lsix
+Type∙₇ = Type● lseven
+Type∙₈ = Type● leight
+Type∙₉ = Type● lnine
