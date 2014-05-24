@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 --
--- A pointed type a type together with a point in it. This module
+-- A pointed type is a type together with a point in it. This module
 -- defines the universe of pointed types which we denote by Type● ℓ.
 -- Like the type universe Type ℓ, it is an inhabitant of Type (ℓ + 1).
 --
