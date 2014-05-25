@@ -13,26 +13,25 @@ module hott.topology.loopspace.eckmann-hilton {ℓ : Level}{A : Type ℓ}{a : A}
   Eckmann-Hilton : (α β : Ω² (A , a)) → α ∙ β ≡ β ∙ α
 
   -- This uses the wiskering technique. Consider the following paths
-  --    ____ p ____   _____ r ____
+  --    ____ p₀ ___   ____ p₁ ____
   --   /           \ /            \
-  --  u      α      v        β     w
+  --  a₀    α₀     a₁      α₁     a₁
   --   \           / \            /
-  --    ---- q-----   ----- s ----
+  --    --- q₀ ----   ---- q₁ ----
   --
-  -- The 2-dimensional α and β paths cannot be composed in general as
-  -- the end point of α (i.e. q) is not the starting point of β
-  -- (i.e. r). However, because the paths are 2-dimenional paths we
+  -- The 2-dimensional α₀ and α₀ paths cannot be composed in general
+  -- as the end point of α₀ (i.e. q₀) is not the starting point of α₁
+  -- (i.e. p₁). However, because the paths are 2-dimenional paths we
   -- can compose them horizontally which we denote by ⋆. We
   -- encapsulate this composition inside a module called wiskering.
   --
-
 
   module wiskering ⦃ a₀ a₁ a₂ : A ⦄ ⦃ p₀ q₀ : a₀ ≡ a₁ ⦄ ⦃ p₁ q₁ : a₁ ≡ a₂ ⦄ where
 
     -- Our goal is to define the horizontal composition given below
     _⋆_  : (α₀ : p₀ ≡ q₀)
          → (α₁ : p₁ ≡ q₁)
-         → p₀ ∙ p₁ ≡ q₀ ∙ q₁
+         → p₀ ∙ p₁ ≡ q₀ ∙ q₁ -- α₀ ⋆ α₁
 
     -- The idea is to "slide" one 1-d path at a time starting from p₀
     -- using the 2-d path α₀. For this fix an aribitrary path γ₁ from
@@ -57,7 +56,7 @@ module hott.topology.loopspace.eckmann-hilton {ℓ : Level}{A : Type ℓ}{a : A}
     α₀ ⋆ α₁ = begin p₀ ∙ p₁ ≡ q₀ ∙ p₁ by applying ⟦⟧∙ p₁ on α₀
                                       -- sliding along α₀
                             ≡ q₀ ∙ q₁ by applying q₀ ∙⟦⟧ on α₁
-                                      -- sliding aloing α₁
+                                      -- sliding along α₁
               ∎
 
     -- The operator ⋆′ in the book is obtained by sliding in a
