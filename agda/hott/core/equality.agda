@@ -122,4 +122,12 @@ applying_on_ : ∀{ℓ₀ ℓ₁}{A : Type ℓ₀}{B : Type ℓ₁}
              → (p : x ≡ y)
              → f x ≡ f y
 applying_on_ f a = ap f a
+
+transporting_over_ : ∀{ℓ₀ ℓ₁}{A : Type ℓ₀}{B : A → Type ℓ₁}
+                   → (f : (a : A) → B(a)){x y : A}
+                   → (p : x ≡ y)
+                   → (p ⋆) (f x) ≡ f y
+transporting f over p = apd f p
+
 infixr 2 applying_on_
+infixr 2 transporting_over_
