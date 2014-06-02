@@ -4,6 +4,7 @@ module hott.core.functions where
 
 open import hott.core.universe
 open import hott.core.nat
+open import hott.core.equality
 
 -- Composition of functions.
 _∘_ : ∀ {ℓ₀ ℓ₁ ℓ₂ : Level} → {A : Type ℓ₀} {B : Type ℓ₁} {C : Type ℓ₂}
@@ -28,5 +29,9 @@ constant : ∀ {ℓ₀ ℓ₁}{A : Type ℓ₀}{B : Type ℓ₁} → A → B →
 constant a b = a
 
 -- Alternate syntax for dependent function type.
-∏ : ∀{ℓ₀ ℓ₁}(A : Type ℓ₀)(B : A → Type ℓ₁) → Type (ℓ₀ ⊔ ℓ₁)
-∏ A B = (a : A) → B(a)
+Π : ∀{ℓ₀ ℓ₁}{A : Type ℓ₀}(B : A → Type ℓ₁) → Type (ℓ₀ ⊔ ℓ₁)
+Π {_}{_}{A} B = (a : A) → B(a)
+
+-- One should use f ~ g to mean that f and g are homotopic.
+_~_   : ∀{ℓ₀ ℓ₁}{A : Type ℓ₀}{B : Type ℓ₁} (f g : A → B) → Type (ℓ₁ ⊔ ℓ₀)
+f ~ g = Π  λ x → f x ≡ g x
