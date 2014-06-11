@@ -15,7 +15,7 @@ open import hott.core.universe
 -- The pointed type is nothing but a dependent pair where the first
 -- component is itself a type.
 Type● : (ℓ : Level) → Type (lsuc ℓ)
-Type● ℓ = Σ (Type ℓ) id
+Type● ℓ = Σ id
 
 -- The level 0 of pointed types.
 Type∙  = Type● lzero
