@@ -4,16 +4,18 @@
 module hott.core.pair where
 
 open import hott.core.universe
+open import hott.core.functions
 
 data Σ {ℓ₀ ℓ₁}
-       (A : Type ℓ₀)
+       {A : Type ℓ₀}
        (B : A → Type ℓ₁) : Type (ℓ₀ ⊔ ℓ₁) where
-  _,_ : (a : A) → (b : B a) → Σ A B
+  _,_ : (a : A) → (b : B a) → Σ B
+
 
 -- Non-dependent Σ type.
 _×_ : ∀{ℓ₀ ℓ₁} (A : Type ℓ₀)
        (B : Type ℓ₁) →  Type (ℓ₀ ⊔ ℓ₁)
-A × B = Σ A (λ _ → B)
+A × B = Σ (λ (x : A) → B)
 
 -- The , constructor is infixr means we can write (a , (b , c)) as
 -- just (a , b , c). The convention that we follow for tuples is that
@@ -27,10 +29,10 @@ infixr 0 _×_
 
 -- The projection to the first component.
 fst : ∀{ℓ₀ ℓ₁} {A : Type ℓ₀} {B : A → Type ℓ₁}
-    → Σ A B → A
+    → Σ B → A
 fst (a , b) = a
 
 -- The projection to the second component.
 snd : ∀{ℓ₀ ℓ₁} {A : Type ℓ₀} {B : A → Type ℓ₁}
-    → (σ : Σ A B) →  B (fst σ)
+    → (σ : Σ B) →  B (fst σ)
 snd (a , b) = b
