@@ -5,6 +5,9 @@
 -- defines the universe of pointed types which we denote by Type● ℓ.
 -- Like the type universe Type ℓ, it is an inhabitant of Type (ℓ + 1).
 --
+-- Editing notes:
+--     ● : \ci followed by selecting the 1 option
+--     ∙ : \.
 
 module hott.core.universe.pointed where
 
