@@ -11,6 +11,22 @@ data _∐_ {ℓ₀ ℓ₁ : Level}
      inl : (a : A) → A ∐ B -- left  introduction
      inr : (b : B) → A ∐ B -- right introduction
 
+-- A more suggestive way of building elements of nested co-product
+-- types. For example if we have a : A, b : B and c : C then the
+-- expressions, a ∣∙, ∙∣ b ∣∙ and ∙∣ ∙∣ c are elements inl a, inr (inl
+-- b) and inr (inr c) of A ∐ B ∐ C respectively.
+
+_∣∙ : {ℓ₀ ℓ₁ : Level}{A : Type ℓ₀}{B : Type ℓ₁}
+    → A → A ∐ B
+_∣∙ = inl
+
+∙∣_ : {ℓ₀ ℓ₁ : Level}{A : Type ℓ₀}{B : Type ℓ₁}
+   → B → A ∐ B
+∙∣_ = inr
+
+infixr 0 ∙∣_
+infixr 0 _∣∙
+
 -- A more suggestive way of building a case by case analysis.
 -- For example, one can just write f1 ∣ f2 ∣ f3
 _∣_ : {a b c : Level}
@@ -26,6 +42,7 @@ _∣_ : {a b c : Level}
 
 infixr 0 _∐_
 infixr 0 _∣_
+
 
 -- Case by case analysis.
 either : {ℓ₀ ℓ₁ ℓ₃ : Level}
