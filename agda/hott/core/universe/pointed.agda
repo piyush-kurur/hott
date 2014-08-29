@@ -11,7 +11,7 @@
 
 module hott.core.universe.pointed where
 
-open import hott.core.pair
+open import hott.core.sigma
 open import hott.core.functions
 open import hott.core.universe
 
