@@ -6,10 +6,13 @@ module hott.core.sigma where
 open import hott.core.universe
 open import hott.core.functions
 
-data Σ {ℓ₀ ℓ₁}
-       {A : Type ℓ₀}
-       (B : A → Type ℓ₁) : Type (ℓ₀ ⊔ ℓ₁) where
-  _,_ : (a : A) → (b : B a) → Σ B
+record Σ {ℓ₀ ℓ₁}
+         {A : Type ℓ₀}
+         (B : A → Type ℓ₁) : Type (ℓ₀ ⊔ ℓ₁) where
+  constructor _,_
+  field
+    proj₁ : A
+    proj₂ : B proj₁
 
 
 -- The product type is just the non-dependent Σ-type.
@@ -29,9 +32,9 @@ infixr 0 _×_
 -- The projection to the first component.
 fst : ∀{ℓ₀ ℓ₁} {A : Type ℓ₀} {B : A → Type ℓ₁}
     → Σ B → A
-fst (a , b) = a
+fst = Σ.proj₁
 
 -- The projection to the second component.
 snd : ∀{ℓ₀ ℓ₁} {A : Type ℓ₀} {B : A → Type ℓ₁}
     → (σ : Σ B) →  B (fst σ)
-snd (a , b) = b
+snd = Σ.proj₂
