@@ -35,3 +35,5 @@ constant a b = a
 -- One should use f ~ g to mean that f and g are homotopic.
 _~_   : ∀{ℓ₀ ℓ₁}{A : Type ℓ₀}{B : Type ℓ₁} (f g : A → B) → Type (ℓ₁ ⊔ ℓ₀)
 f ~ g = Π  λ x → f x ≡ g x
+
+infixr 1   _~_
