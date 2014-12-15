@@ -13,11 +13,8 @@ open import hott.core.sigma
 -- should be a map from A to B that is witnesses the equivalence of the
 -- two type. This is captured by the following record.
 
-record _≃_  {ℓ  : Level}(A B : Type ℓ) : Type ℓ where
+record _≃_  {a b : Level}(A : Type a)(B : Type b) : Type (a ⊔ b) where
 
--- Alternate definition which help state the univalence axiom.
--- record _≃_  {a b  : Level}(A : Type a)(B : Type b) : Type (a ⊔ b) where
---
   constructor IdentifyTypesVia
   field
     equiv     : (A → B)  -- The equivalence
@@ -37,34 +34,10 @@ record _≃_  {ℓ  : Level}(A B : Type ℓ) : Type ℓ where
   --       ...
   -- Provided an appropriate instance is available in the vicinity.
   --
-  postulate univalence : A ≡ B
+  -- postulate univalence : A ≡ B
 
 -- Of course a type should be equivalent to itself via identity.
 A≃A : {ℓ : Level}{A : Type ℓ} → A ≃ A
 A≃A {ℓ} {A} = IdentifyTypesVia id id id (λ _ →  refl) (λ _ → refl)
 
-open _≃_ ⦃...⦄ public using (univalence)
-
-
-module Univalence where
-
-  IdToEq : {ℓ : Level}{A B : Type ℓ} → A ≡ B → A ≃ B
-  IdToEq refl = A≃A
-
-
-  EqToId : {ℓ : Level}{A B : Type ℓ} → (A ≃ B) → A ≡ B
-  EqToId a≃b = univalence ⦃ a≃b ⦄
-
-  postulate IdToEq∘EqToId~id : {ℓ : Level}{A B : Type ℓ} →
-                             (IdToEq {ℓ} {A} {B} ∘ EqToId {ℓ} {A} {B}) ~ id
-  postulate EqToId∘IdToTq~id : {ℓ : Level}{A B : Type ℓ} →
-                             (EqToId {ℓ} {A} {B} ∘ IdToEq {ℓ} {A} {B}) ~ id
-
-
--- The univanlence axiom
---
--- postulate Univalence : {ℓ : Type ℓ}{A B : Type ℓ} → (A ≃ B) → (A ≡ B)
---
--- This will only work with the second definition. In such a case we cannot
--- have the member definition univalence.
---
+postulate UnivalenceAxiom : {ℓ : Level}{A B : Type ℓ} → (A ≃ B) ≃ (A ≡ B)
