@@ -12,7 +12,6 @@ open import hott.core.sigma
 -- equal. Of course the normal definition of isomorphism is that there
 -- should be a map from A to B that is witnesses the equivalence of the
 -- two type. This is captured by the following record.
-
 record _≃_  {a b : Level}(A : Type a)(B : Type b) : Type (a ⊔ b) where
 
   constructor IdentifyTypesVia
@@ -26,18 +25,38 @@ record _≃_  {a b : Level}(A : Type a)(B : Type b) : Type (a ⊔ b) where
     left-inv∘equiv~idA  : left-inv ∘ equiv ~ id
     iso∘right-equiv~idB : equiv    ∘ right-inv ~ id
 
-  -- This postulate helps in clean use of the univalence postulate in
-  -- equational reasoning. If this module is opened using instance arguments
-  -- one can use equations of the kind
-  -- begin ...
-  --       ≡    B by univalence
-  --       ...
-  -- Provided an appropriate instance is available in the vicinity.
-  --
-  -- postulate univalence : A ≡ B
-
 -- Of course a type should be equivalent to itself via identity.
 A≃A : {ℓ : Level}{A : Type ℓ} → A ≃ A
 A≃A {ℓ} {A} = IdentifyTypesVia id id id (λ _ →  refl) (λ _ → refl)
 
-postulate UnivalenceAxiom : {ℓ : Level}{A B : Type ℓ} → (A ≃ B) ≃ (A ≡ B)
+-- Now starts the univalence axiom.
+module Univalence {ℓ : Level}{A B : Type ℓ} where
+
+  -- The main axiom is to identify A ≃ B with A ≡ B
+  postulate ua : A ≃ B → A ≡ B
+
+  -- The converse is actually a theorem.
+  ≡→≃ : A ≡ B → A ≃ B
+  ≡→≃ x rewrite x = A≃A
+
+  -- Now we are ready for the univalence axiom.
+  UnivalenceAxiom : (A ≃ B) ≃ (A ≡ B)
+  UnivalenceAxiom = IdentifyTypesVia ua ≡→≃ ≡→≃ linv-prf rinv-prf
+    where postulate rinv-prf :  ua ∘ ≡→≃ ~ id
+          postulate linv-prf :  ≡→≃ ∘ ua ~ id
+
+  -- The next function helps in clean use of the univalence
+  -- axioms in equational reasoning.
+  --
+  --
+  -- begin ...
+  --       ≡    B by univalence
+  --       ...
+  --
+  -- provided an appropriate instance of A ≃ B is available in the
+  -- vicinity.
+  --
+  univalence : ⦃ a≃b : A ≃ B ⦄ → A ≡ B
+  univalence ⦃ a≃b ⦄ = ua a≃b
+
+open Univalence public
