@@ -3,26 +3,11 @@
 -- The universe of all types
 module hott.core.universe where
 
-postulate
-  Level : Set
-  lzero : Level
-  lsuc  : Level → Level
-  _⊔_   : Level → Level → Level
-
-{-# COMPILED_TYPE Level ()            #-}
-{-# COMPILED      lzero          ()   #-}
-{-# COMPILED      lsuc (\ _   -> ())  #-}
-{-# COMPILED      _⊔_  (\ _ _ -> ())  #-}
-
-{-# BUILTIN LEVEL       Level  #-}
-{-# BUILTIN LEVELZERO   lzero  #-}
-{-# BUILTIN LEVELSUC    lsuc   #-}
-{-# BUILTIN LEVELMAX    _⊔_    #-}
+open import Agda.Primitive public using (Level; lzero; lsuc; _⊔_)
 
 -- We give an new name for Set
 Type : (ℓ : Level) → Set (lsuc ℓ)
 Type ℓ = Set ℓ
-
 
 lone   : Level; lone   = lsuc lzero
 ltwo   : Level; ltwo   = lsuc lone
