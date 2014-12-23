@@ -1,16 +1,23 @@
 {-# OPTIONS --without-K #-}
 
 open import hott.core
-
+open import hott.core.theorems
 -- An important theorem in topology is to show the 2-dimensional loop
 -- space is abelian. To avoid notational clutter we parameterize the
 -- common variables as module parameters.
 
-module hott.topology.loopspace.eckmann-hilton {ℓ : Level}{A : Type ℓ}{a : A} where
+module hott.topology.loopspace.eckmann-hilton {ℓ : Level}{A : Type ℓ}{a : A}
+       where
+
+
+  -- Let us give a name to the trivial loop at a
+  reflₐ : a ≡ a
+  reflₐ = refl {ℓ}{A}{a}
 
   open import hott.topology.loopspace
 
-  Eckmann-Hilton : (α β : Ω² (A , a)) → α ∙ β ≡ β ∙ α
+  -- Eckmann-Hilton : (α β : Ω² (A , a)) → α ∙ β ≡ β ∙ α
+
 
   -- This uses the wiskering technique. Consider the following paths
   --    ____ p₀ ___   ____ p₁ ____
@@ -26,71 +33,97 @@ module hott.topology.loopspace.eckmann-hilton {ℓ : Level}{A : Type ℓ}{a : A}
   -- encapsulate this composition inside a module called wiskering.
   --
 
-  module wiskering ⦃ a₀ a₁ a₂ : A ⦄ ⦃ p₀ q₀ : a₀ ≡ a₁ ⦄ ⦃ p₁ q₁ : a₁ ≡ a₂ ⦄ where
 
-    -- Our goal is to define the horizontal composition given below
-    _⋆_  : (α₀ : p₀ ≡ q₀)
-         → (α₁ : p₁ ≡ q₁)
-         → p₀ ∙ p₁ ≡ q₀ ∙ q₁ -- α₀ ⋆ α₁
 
-    -- The idea is to "slide" one 1-d path at a time starting from p₀
-    -- using the 2-d path α₀. For this fix an aribitrary path γ₁ from
-    -- a₁ to a₂ and consider the single argument function that takes
-    -- any path γ₀ from a₀ to a₁ and appends γ₁ to it. By applying
-    -- this to α₀ we can slide from p₀ ∙ γ₁ to q₀ ∙ γ₁.  The function
-    -- is defined below. The ⟦⟧ indicates the place where we need to
-    -- put the argument.
-    ⟦⟧∙_   : (γ₁ : a₁ ≡ a₂)
-           → (γ₀ : a₀ ≡ a₁)
-           → (a₀ ≡ a₂)
-    ⟦⟧∙ γ₁ = λ γ₀ → γ₀ ∙ γ₁
+  module wiskering {x y : A}{p q : x ≡ y} where
+    _∙ᵣ_ : {z : A} (α : p ≡ q)(r : y ≡ z) → p ∙ r ≡ q ∙ r
+    α ∙ᵣ refl = p∙refl≡p p ∙ α ∙ p≡p∙refl q
 
-    -- The next function is similar to the previous function but used
-    -- to slide the second 1-d path around α₁.
-    _∙⟦⟧   : (γ₀ : a₀ ≡ a₁ )
-           → (γ₁ : a₁ ≡ a₂)
-           → (a₀ ≡ a₂)
-    γ₀ ∙⟦⟧ = λ γ₁ → γ₀ ∙ γ₁
+    _∙ₗ_ : {w : A}(r : w ≡ x)(β : p ≡ q) → r ∙ p ≡ r ∙ q
+    refl ∙ₗ β = refl∙p≡p p ∙ β ∙ p≡refl∙p q
 
-    -- Finally we have the horizontal composition.
-    α₀ ⋆ α₁ = begin p₀ ∙ p₁ ≡ q₀ ∙ p₁ by applying ⟦⟧∙ p₁ on α₀
-                                      -- sliding along α₀
-                            ≡ q₀ ∙ q₁ by applying q₀ ∙⟦⟧ on α₁
-                                      -- sliding along α₁
-              ∎
 
-    -- The operator ⋆′ in the book is obtained by sliding in a
-    -- different order. We do not need to define that but we give
-    -- definition none the less for illustration.
-    --
-    _⋆′_ : (α₀ : p₀ ≡ q₀)
-         → (α₁ : p₁ ≡ q₁)
-         → p₀ ∙ p₁ ≡ q₀ ∙ q₁
-    --
-    α₀ ⋆′ α₁ = begin p₀ ∙ p₁ ≡ p₀ ∙ q₁ by applying p₀ ∙⟦⟧ on α₁
-                                       -- sliding along α₁
-                             ≡ q₀ ∙ q₁ by applying ⟦⟧∙ q₁ on α₀
-                                       -- sliding along α₀
-               ∎
+  open wiskering
 
-    -- End of module wiskering.
 
-  -- We now consider the horizontal composition in the case when the
-  -- end points a₀, a₁ and a₂ are all a and the paths p₀, p₁, q₀ and
-  -- q₁ are all refl.
-  AllPathsAreRefl : a ≡ a; AllPathsAreRefl = refl
-  private open wiskering
+--------   Lemmas on wiskering ------------------------------------
 
-  -- In this case the horizontal composition and vertical composition
-  -- satisfies the following identities.
-  private α∙β≡α⋆β : (α β : Ω² (A , a)) → α ∙ β ≡ α ⋆ β
-  private α⋆β≡β∙α : (α β : Ω² (A , a)) → α ⋆ β ≡ β ∙ α
+  -- The next two lemma specialises the wiskering when one of the
+  -- paths is refl.
+  α∙ᵣrefl≡α : (α : reflₐ ≡ reflₐ) → α ∙ᵣ reflₐ ≡ α
+  α∙ᵣrefl≡α α =
+    begin α ∙ᵣ refl ≡ refl ∙ α ∙ refl by  definition
+                    ≡ α ∙ refl        by  applying flip _∙_ refl
+                                      on refl∙p≡p α
+                    ≡ α by p∙refl≡p α
+    ∎
 
-  α∙β≡α⋆β refl refl = refl
-  α⋆β≡β∙α refl refl = refl
+  refl∙ₗβ≡β : (β : reflₐ ≡ reflₐ) → reflₐ ∙ₗ β ≡ β
+  refl∙ₗβ≡β β =
+    begin refl ∙ₗ β ≡ refl ∙ β ∙ refl by definition
+                    ≡ β ∙ refl        by applying flip _∙_ refl
+                                      on refl∙p≡p β
+                    ≡ β by p∙refl≡p β
+    ∎
 
-  -- Finally, we are at the proof.
-  Eckmann-Hilton α β = begin α ∙ β ≡ α ⋆ β by α∙β≡α⋆β α β
-                                   ≡ β ∙ α by α⋆β≡β∙α α β
+---------- End of lemma on wiskering -----------------------------
 
-                       ∎
+  -- With wiskering we can now define two different horizontal
+  -- composition of higher order paths.
+  module horizontal {a₀ a₁ a₂ : A}{p q : a₀ ≡ a₁}{r s : a₁ ≡ a₂} where
+
+    _⋆_  : (α : p ≡ q)
+         → (β : r ≡ s)
+         → p ∙ r ≡ q ∙ s -- α₀ ⋆ α₁
+
+    α ⋆ β = (α ∙ᵣ r) ∙ (q ∙ₗ β)
+
+    _⋆′_ : (α : p ≡ q)
+         → (β : r ≡ s)
+         → p ∙ r ≡ q ∙ s
+
+    α ⋆′ β = (p ∙ₗ β) ∙ (α ∙ᵣ s)
+
+  open horizontal
+
+  -- The shows that either ways of horizontal composition gives the
+  -- same higher homotopy. Here we need to induct on all α β an
+  ⋆≡⋆′ : {p : a ≡ a}{r : a ≡ a}
+         (α : p ≡ reflₐ) (β : reflₐ ≡ r )
+        → α ⋆ β ≡ α ⋆′ β
+  ⋆≡⋆′ refl refl = refl
+
+  -- The specialisation of the above lemma for elements in the second
+  -- loop space.
+  ⋆≡⋆′-refl : {α β : Ω² (A , a)} → α ⋆ β ≡ α ⋆′ β
+  ⋆≡⋆′-refl {α} {β} = ⋆≡⋆′ α β
+
+  -- When every path is refl horizontal compositions α ⋆ β and α ⋆′ β
+  -- reduce to α ∙ β and β ∙ α respectively. The proofs are given at
+  -- the end.
+  α⋆β≡α∙β : {α β : Ω² (A , a)} → α ⋆ β ≡ α ∙ β
+  α⋆′β≡β∙α : {α β : Ω² (A , a)} → α ⋆′ β ≡ β ∙ α
+
+  -- From which we get the Eckmann-Hilton theorem.
+  Eckmann-Hilton : (α β : Ω² (A , a)) → α ∙ β ≡ β ∙ α
+  Eckmann-Hilton α β = begin α ∙ β ≡ α ⋆  β by α⋆β≡α∙β ⁻¹
+                                   ≡ α ⋆′ β by ⋆≡⋆′-refl
+                                   ≡ β ∙ α  by α⋆′β≡β∙α
+
+  -- Proofs.
+  α⋆β≡α∙β {α}{β} =
+    begin α ⋆ β ≡ (α ∙ᵣ refl) ∙ (refl ∙ₗ β)
+                     by definition
+                ≡ (α ∙ᵣ refl) ∙ β
+                     by applying _∙_ (α ∙ᵣ refl) on refl∙ₗβ≡β β
+                ≡ α ∙ β
+                     by applying flip _∙_ β on α∙ᵣrefl≡α α
+    ∎
+  α⋆′β≡β∙α {α}{β} =
+    begin α ⋆′ β ≡ (refl ∙ₗ β) ∙ (α ∙ᵣ refl)
+                         by definition
+                 ≡ (refl ∙ₗ β) ∙ α
+                         by applying _∙_ (refl ∙ₗ β) on α∙ᵣrefl≡α α
+                 ≡ β ∙ α
+                         by applying flip _∙_ α on refl∙ₗβ≡β β
+    ∎

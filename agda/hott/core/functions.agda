@@ -20,6 +20,9 @@ iterate : ∀{ℓ} {A : Type ℓ} → (A → A) → ℕ → A → A
 iterate _ zero     = id
 iterate f (succ n) = f ∘ iterate f n
 
+flip : {a b c : Level}{A : Type a}{B : Type b}{C : Type c}
+     → (A → B → C) → (B → A → C)
+flip f b a = f a b
 
 -- We want compostion to have very high precedence.
 infixr 100 _∘_

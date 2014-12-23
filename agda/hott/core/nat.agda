@@ -10,8 +10,6 @@ data ℕ : Type₀ where
   succ : ℕ → ℕ
 
 {-# BUILTIN NATURAL ℕ #-}
-{-# BUILTIN ZERO zero #-}
-{-# BUILTIN SUC  succ #-}
 
 -- Addition.
 _+_   : ℕ → ℕ → ℕ
