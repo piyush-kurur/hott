@@ -29,15 +29,18 @@ record _≃_  {a b : Level}(A : Type a)(B : Type b) : Type (a ⊔ b) where
 A≃A : {ℓ : Level}{A : Type ℓ} → A ≃ A
 A≃A {ℓ} {A} = IdentifyTypesVia id id id (λ _ →  refl) (λ _ → refl)
 
--- Now starts the univalence axiom.
+-- Equal types are equivalent.
+≡→≃ : {ℓ : Level}{A B : Type ℓ} → A ≡ B → A ≃ B
+≡→≃ refl = A≃A
+
+
+-- For the converse we need the univalence. However Univalence says
+-- something. Not only can we infer A ≡ B from A ≃ B via the postulate
+-- ua, this map together with ≡→≃ gives an equivalence of types.
 module Univalence {ℓ : Level}{A B : Type ℓ} where
 
   -- The main axiom is to identify A ≃ B with A ≡ B
   postulate ua : A ≃ B → A ≡ B
-
-  -- The converse is actually a theorem.
-  ≡→≃ : A ≡ B → A ≃ B
-  ≡→≃ x rewrite x = A≃A
 
   -- Now we are ready for the univalence axiom.
   UnivalenceAxiom : (A ≃ B) ≃ (A ≡ B)
