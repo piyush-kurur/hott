@@ -1,6 +1,6 @@
 {-# OPTIONS --without-K #-}
 
-module hott.core.functions where
+module hott.functions where
 
 open import hott.core.universe
 open import hott.core.equality
