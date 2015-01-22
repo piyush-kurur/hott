@@ -1,6 +1,6 @@
 {-# OPTIONS --without-K #-}
 
-module hott.core.nat where
+module hott.types.nat where
 
 open import hott.core.universe
 open import hott.core.equality
