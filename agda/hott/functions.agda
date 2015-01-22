@@ -1,9 +1,8 @@
 {-# OPTIONS --without-K #-}
 
-module hott.core.functions where
+module hott.functions where
 
 open import hott.core.universe
-open import hott.core.nat
 open import hott.core.equality
 
 -- Composition of functions.
@@ -15,11 +14,7 @@ f ∘ g = λ x → f (g x)
 id : ∀{ℓ} {A : Type ℓ} → A → A
 id x = x
 
--- The interated fucntion
-iterate : ∀{ℓ} {A : Type ℓ} → (A → A) → ℕ → A → A
-iterate _ zero     = id
-iterate f (succ n) = f ∘ iterate f n
-
+-- Change the order of arguments in a bivariate function.
 flip : {a b c : Level}{A : Type a}{B : Type b}{C : Type c}
      → (A → B → C) → (B → A → C)
 flip f b a = f a b

@@ -1,6 +1,6 @@
 {-# OPTIONS --without-K #-}
 
-module hott.core.coproduct where
+module hott.types.coproduct where
 
 open import hott.core.universe
 

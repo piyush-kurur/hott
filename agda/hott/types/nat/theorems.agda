@@ -1,9 +1,10 @@
 {-# OPTIONS --without-K #-}
 
 -- Some basic theorms about natural numbers.
-module hott.core.nat.theorems where
+module hott.types.nat.theorems where
 
 open import hott.core
+open import hott.types.nat
 
 -- 0 is the right identity of addition.
 x+0≡x : ∀(x : ℕ) → x + 0 ≡ x

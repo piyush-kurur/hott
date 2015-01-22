@@ -4,7 +4,6 @@
 module hott.core.sigma where
 
 open import hott.core.universe
-open import hott.core.functions
 
 record Σ {ℓ₀ ℓ₁}
          {A : Type ℓ₀}
