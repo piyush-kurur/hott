@@ -4,118 +4,124 @@ module hott.core.equality where
 open import hott.core.universe
 
 -- | The equality type. In hott we think of the equality type as paths
--- between two points in the space A.
-data _≡_ {ℓ} {A : Type ℓ} (x : A) : (y : A) → Type ℓ where
-  refl : x ≡ x
+-- between two points in the space A. To simplify the types we first
+-- fix the common parameters.
+
+module common {a : Level}{A : Type a} where
+
+
+  data _≡_ (x : A) : (y : A) → Type a where
+    refl : x ≡ x
+
+  -- Induction principle for ≡ type.
+  induction≡ : {ℓ : Level}
+             → (D : {x y : A} (p : x ≡ y) → Type ℓ)
+             → (d : {x : A} → D {x} {x} refl)
+             → {x y : A} → (p : x ≡ y) → D p
+  induction≡ D d refl = d
+
+  -- In hott view point, this function takes the inverse of the path
+  -- from x to y. As a relation you are proving that ≡ is symmetric.
+  _⁻¹ : ∀{x y}
+      → x ≡ y → y ≡ x
+  refl ⁻¹ = refl
+
+  -- The path composition. This means transitivity of the ≡ relation.
+  _∙_ : ∀ {x y z}
+      → x ≡ y → y ≡ z → x ≡ z
+  refl ∙ refl = refl
+
+
+  infixr 1 _≡_
+
+  -- Precedence of multiplication
+  infixl 70 _∙_
+
+  -- Precedence of exponentiation.
+  infixl 90 _⁻¹
+  -- Equational reasoning
+  -- To prove x_0 = x_n by a sequence of proofs
+  -- x_0 = x_1
+  -- x_1 = x_2
+  -- ... you can use the following syntax
+  --
+  -- begin x_0 ≅ x_1 by p1
+  --           ≅ x_2 by p2
+  --       ....
+  --           ≅ x_n by pn
+  -- ∎
+  --
+
+  -- In equational proofs, it is more readable to use by definition
+  -- than by refl
+  definition : ∀{x} → x ≡ x
+  definition = refl
+
+  begin_ : (x : A)
+         → x ≡ x
+  begin_ x = refl
+
+  _≡_by_ : ∀ {x y : A}
+         → x ≡ y
+         → (z : A)
+         → y ≡ z
+         → x ≡ z
+  p ≡ z by q = p ∙ q
+
+  _∎ : ∀{x y : A}
+     → (x ≡ y)
+     → (x ≡ y)
+  proof ∎ = proof
+
+  infixl 2 begin_
+  infixl 1 _≡_by_
+  infixl 0 _∎
+
+
+  -- We now capture path transportation in the following submodule.
+  module Transport {ℓ : Level} where
+    -- Path transportation.
+    transport : ∀ {x y : A}
+              → x ≡ y
+              → {P : A → Type ℓ}
+              → P x → P y
+    transport refl = λ z → z
+
+    -- Another symbol for transport. Use it when you do not want to
+    -- specify P.
+    _⋆ : {P : A → Type ℓ}
+     → {x y : A}
+     → x ≡ y
+     → P x → P y
+    p ⋆ = transport p
+
+  open Transport public
+
+open common public
+
 
 {-# BUILTIN EQUALITY _≡_     #-}
 {-# BUILTIN REFL     refl    #-}
 
--- Induction principle for ≡ type.
-induction≡ : {ℓ₀ ℓ₁ : Level} {A : Type ℓ₀}
-         → (D : {x y : A} (p : x ≡ y) → Type ℓ₁)
-         → (d : {x : A} → D {x} {x} refl)
-         → {x y : A} → (p : x ≡ y) → D p
-
-induction≡ D d refl = d
-
--- Path transportation. Although the type family P does not depend on
--- the values x and y, we have moved it closer to x ≡ y argument so
--- that we can easily pass the implicit argument P as transport {P} p.
--- We do no have to bother too much about the other implicit
--- arguments.
-transport : ∀ {ℓ₀ ℓ₁}{A : Type ℓ₀}{x y : A}
-          → {P : A → Type ℓ₁}
-          → x ≡ y
-          → P x → P y
-transport refl = λ z → z
-
--- Another symbol for transport. Use it when you do not want to
--- specify P.
-_⋆ : ∀ {ℓ₀ ℓ₁}{A : Type ℓ₀}{P : A → Type ℓ₁}
-   → {x y : A}
-   → x ≡ y
-   → P x → P y
-p ⋆ = transport p
-
-
--- In hott view point, this function takes the inverse of the path
--- from x to y. As a relation you are proving that ≡ is symmetric.
-_⁻¹ : ∀{ℓ} {A : Type ℓ} {x y : A}
-    → x ≡ y → y ≡ x
-refl ⁻¹ = refl
-
--- The path composition. This means transitivity of the ≡ relation.
-_∙_ : ∀ {ℓ} {A : Type ℓ}  {x y z : A}
-    → x ≡ y → y ≡ z → x ≡ z
-refl ∙ refl = refl
 
 -- The functional congruence, i.e. likes gives likes on application of
 -- a function. In the HoTT perspective this says that functions are
 -- functors.
-ap : ∀ {ℓ₀ ℓ₁} {A : Type ℓ₀} {B : Type ℓ₁} {x y : A}
-     → ∀ (f : A → B)
-     → x ≡ y → f x ≡ f y
+ap : ∀ {a b : Level} {A : Type a}{B : Type b} {x y : A}
+     → (f : A → B)
+     → x ≡ y → (f x) ≡ (f y)
 ap f refl = refl
 
 -- The dependent version of ap. This requires transport for its
 -- definition.
-
-apd : ∀{ℓ₀ ℓ₁}{A : Type ℓ₀}{B : A → Type ℓ₁}
+apd : ∀{a b : Level }{A : Type a}{B : A → Type b}
     → (f : (a : A) → B a)
     → {x y : A}
     → (p : x ≡ y)
     → (p ⋆) (f x) ≡ f y
 apd f refl = refl
 
-
-infixr 1 _≡_
-
--- Precedence of multiplication
-
-infixl 70 _∙_
-
--- Precedence of exponentiation.
-infixl 90 _⁻¹
-
--- Equational reasoning
--- To prove x_0 = x_n by a sequence of proofs
--- x_0 = x_1
--- x_1 = x_2
--- ... you can use the following syntax
---
--- begin x_0 ≅ x_1 by p1
---           ≅ x_2 by p2
---       ....
---           ≅ x_n by pn
--- ∎
---
-begin_ : ∀ {ℓ} {A : Type ℓ}
-       → (x : A)
-       → x ≡ x
-begin_ x = refl
-
-_≡_by_ : ∀ {ℓ} {A : Type ℓ} {x y}
-       → x ≡ y
-       → (z : A)
-       → y ≡ z
-       → x ≡ z
-p ≡ z by q = p ∙ q
-
-_∎ : ∀ {ℓ} {A : Type ℓ} {x y : A}
-   → (x ≡ y)
-   → (x ≡ y)
-proof ∎ = proof
-
--- In equational proofs, it is more readable to use by definition
--- than by refl
-definition : ∀{ℓ} {A : Type ℓ} {x : A} → x ≡ x
-definition = refl
-
-infixl 2 begin_
-infixl 1 _≡_by_
-infixl 0 _∎
-
+-- Better syntax fro ap in equational reasoning.
 applying_on_ : ∀{ℓ₀ ℓ₁}{A : Type ℓ₀}{B : Type ℓ₁}
              → (f : A → B)
              → {x y : A}
@@ -123,6 +129,7 @@ applying_on_ : ∀{ℓ₀ ℓ₁}{A : Type ℓ₀}{B : Type ℓ₁}
              → f x ≡ f y
 applying_on_ f a = ap f a
 
+-- Better syntax for dependent version of applying on both sides.
 transporting_over_ : ∀{ℓ₀ ℓ₁}{A : Type ℓ₀}{B : A → Type ℓ₁}
                    → (f : (a : A) → B(a)){x y : A}
                    → (p : x ≡ y)
