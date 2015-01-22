@@ -12,13 +12,12 @@
 module hott.core.universe.pointed where
 
 open import hott.core.sigma
-open import hott.core.functions
 open import hott.core.universe
 
 -- The pointed type is nothing but a dependent pair where the first
 -- component is itself a type.
 Type● : (ℓ : Level) → Type (lsuc ℓ)
-Type● ℓ = Σ id
+Type● ℓ = Σ λ x → x
 
 -- The level 0 of pointed types.
 Type∙  = Type● lzero
