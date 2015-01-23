@@ -2,6 +2,8 @@
 
 open import hott.core
 open import hott.core.theorems
+open import hott.functions
+
 -- An important theorem in topology is to show the 2-dimensional loop
 -- space is abelian. To avoid notational clutter we parameterize the
 -- common variables as module parameters.

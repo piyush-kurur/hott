@@ -3,6 +3,8 @@
 module hott.topology.loopspace where
 
 open import hott.core
+open import hott.types
+open import hott.functions
 
 
 -- The pointed loop space
