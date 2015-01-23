@@ -4,7 +4,7 @@ module hott.types.nat where
 
 open import hott.core.universe
 open import hott.core.equality
-open import hott.core.functions
+open import hott.functions
 
 data ℕ : Type₀ where
   zero : ℕ

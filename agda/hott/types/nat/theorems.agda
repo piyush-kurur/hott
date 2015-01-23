@@ -4,6 +4,7 @@
 module hott.types.nat.theorems where
 
 open import hott.core
+open import hott.functions
 open import hott.types.nat
 
 -- 0 is the right identity of addition.
