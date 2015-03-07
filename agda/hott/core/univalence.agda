@@ -3,7 +3,7 @@
 module hott.core.univalence  where
 
 open import hott.core.universe
-open import hott.core.functions
+open import hott.functions
 open import hott.core.equality
 open import hott.core.sigma
 
